@@ -74,7 +74,7 @@ const Users = () => {
                                 count={Math.ceil(users.length / usersPerPage)}
                                 page={currentPage}
                                 onChange={handlePageChange}
-                                color="primary"
+                                color="secondary"
                             />
                         </Stack>
                     </div>
@@ -85,9 +85,9 @@ const Users = () => {
                     </Typography>
                     {
                         !selectedUser ? 
-                        (<p>Please click user details button to see a user details</p>)
+                        (<p>Please click user details button to see a user details.</p>)
                         :
-                        <UsersDetails selectedUser={selectedUser}></UsersDetails>
+                        <UsersDetails selectedUser={selectedUser} setSelectedUser={setSelectedUser}></UsersDetails>
                     }
                 </Box>
             </Box>

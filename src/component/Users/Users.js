@@ -37,9 +37,12 @@ const Users = () => {
     };
 
     return (
-        <Box>
-            <Typography sx={{textAlign: "center"}} variant='h3'>
+        <Box sx={{mt: "10px"}}>
+            <Typography sx={{textAlign: "center"}} variant='h4'>
                 Welcome!!!
+            </Typography>
+            <Typography sx={{textAlign: "center"}} variant='h6'>
+                Here you can see users list and users details.
             </Typography>
             {
                 loading && (
@@ -48,7 +51,9 @@ const Users = () => {
                     </Box>
                 )
             }
-            <Box sx={{marginTop: "30px", display: "flex",justifyContent: "center", gap: "10%"}}>
+
+            {/* Users List */}
+            <Box sx={{marginTop: "25px", display: "flex",justifyContent: "center", gap: "10%"}}>
                 <Box sx={{width: "40%"}}>
                     {
                         error && <p>{error}</p>
@@ -61,7 +66,7 @@ const Users = () => {
                         )
                     }
                     <div>
-                        <Typography sx={{mb: "30px" ,textAlign: "center"}} variant='h4'>
+                        <Typography sx={{mb: "25px" ,textAlign: "center", borderBottom: "2px solid #333"}} variant='h5' >
                             Users List
                         </Typography>
                         {
@@ -79,8 +84,10 @@ const Users = () => {
                         </Stack>
                     </div>
                 </Box>
+
+                {/* User Details */}
                 <Box sx={{width: "40%"}}>
-                    <Typography sx={{mb: "30px" ,textAlign: "center"}} variant='h4'>
+                    <Typography sx={{mb: "25px" ,textAlign: "center", borderBottom: "2px solid #333"}} variant='h5'>
                         UserDetails
                     </Typography>
                     {

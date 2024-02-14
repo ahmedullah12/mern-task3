@@ -11,8 +11,6 @@ import BadgeIcon from '@mui/icons-material/Badge';
 export default function User({user, setSelectedUser}) {
   const {avatar, profile } = user;
 
-
-
   return (
     <div>
         <List sx={{ bgcolor: 'background.paper' }}>

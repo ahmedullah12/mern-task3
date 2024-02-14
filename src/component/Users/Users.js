@@ -2,20 +2,21 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import User from './User';
 import UsersDetails from './UsersDetails';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Pagination, Stack, Typography } from '@mui/material';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [selectedUser, setSelectedUser] = useState(null)
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 6;
 
     const url = "https://602e7c2c4410730017c50b9d.mockapi.io/users";
 
     useEffect(() => {
         axios.get(url)
         .then(res => {
-            console.log(res.data);
             setUsers(res.data);
             setLoading(false);
         })
@@ -25,6 +26,15 @@ const Users = () => {
             setLoading(false);
         });
     }, []);
+
+
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
 
     return (
         <Box>
@@ -38,18 +48,6 @@ const Users = () => {
                     </Box>
                 )
             }
-            {/* {error && <p>{error}</p>} */}
-            {/* <div>
-                {!loading && users.length === 0 && (
-                    <Typography variant="subtitle1" gutterBottom>
-                        No Data to Show
-                    </Typography>
-                )}
-                {users.length > 0 && users.map((user, i) => <User key={i} user={user} setSelectedUser={setSelectedUser}></User>)}
-            </div>
-            <div>
-                <UsersDetails selectedUser={selectedUser}/>
-            </div> */}
             <Box sx={{marginTop: "30px", display: "flex",justifyContent: "center", gap: "10%"}}>
                 <Box sx={{width: "40%"}}>
                     {
@@ -67,17 +65,30 @@ const Users = () => {
                             Users List
                         </Typography>
                         {
-                            users.length > 0 && users.map((user, i) => 
+                            currentUsers.map((user, i) => 
                             <User key={i} user={user} setSelectedUser={setSelectedUser}></User>
                             )
                         }
+                        <Stack spacing={2} sx={{marginTop: '20px'}}>
+                            <Pagination
+                                count={Math.ceil(users.length / usersPerPage)}
+                                page={currentPage}
+                                onChange={handlePageChange}
+                                color="primary"
+                            />
+                        </Stack>
                     </div>
                 </Box>
                 <Box sx={{width: "40%"}}>
-                    <Typography variant='h4'>
+                    <Typography sx={{mb: "30px" ,textAlign: "center"}} variant='h4'>
                         UserDetails
                     </Typography>
-
+                    {
+                        !selectedUser ? 
+                        (<p>Please click user details button to see a user details</p>)
+                        :
+                        <UsersDetails selectedUser={selectedUser}></UsersDetails>
+                    }
                 </Box>
             </Box>
         </Box>

@@ -2,7 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import User from './User';
 import UsersDetails from './UsersDetails';
-import { Box, CircularProgress, Pagination, Stack, Typography } from '@mui/material';
+import { Box, CircularProgress, Pagination, PaginationItem, Stack, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -80,6 +82,12 @@ const Users = () => {
                                 page={currentPage}
                                 onChange={handlePageChange}
                                 color="secondary"
+                                renderItem={(item) => (
+                                    <PaginationItem
+                                      slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                      {...item}
+                                    />
+                                  )}
                             />
                         </Stack>
                     </div>

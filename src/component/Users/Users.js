@@ -19,8 +19,8 @@ const Users = () => {
     useEffect(() => {
         axios.get(url)
         .then(res => {
-            setUsers(res.data);
             setLoading(false);
+            setUsers(res.data);
         })
         .catch(err => {
             console.log(err);
@@ -46,17 +46,20 @@ const Users = () => {
             <Typography sx={{textAlign: "center"}} variant='h6'>
                 Here you can see users list and users details.
             </Typography>
-            {
-                loading && (
-                    <Box sx={{width: "100vw", height: "90vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <CircularProgress color="secondary" />
-                    </Box>
-                )
-            }
-
+    
             {/* Users List */}
             <Box sx={{marginTop: "25px", display: "flex",justifyContent: "center", gap: "10%"}}>
                 <Box sx={{width: "40%"}}>
+                    <Typography sx={{mb: "25px" ,textAlign: "center", borderBottom: "2px solid #333"}} variant='h5' >
+                        Users List
+                    </Typography>
+                    {
+                        loading && (
+                            <Box sx={{height: "50vh",  display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                <CircularProgress color="secondary" />
+                            </Box>
+                        )
+                    }
                     {
                         error && <p>{error}</p>
                     }
@@ -67,30 +70,32 @@ const Users = () => {
                             </Typography>
                         )
                     }
-                    <div>
-                        <Typography sx={{mb: "25px" ,textAlign: "center", borderBottom: "2px solid #333"}} variant='h5' >
-                            Users List
-                        </Typography>
-                        {
-                            currentUsers.map((user, i) => 
-                            <User key={i} user={user} setSelectedUser={setSelectedUser}></User>
-                            )
-                        }
-                        <Stack spacing={2} sx={{marginTop: '20px'}}>
-                            <Pagination
-                                count={Math.ceil(users.length / usersPerPage)}
-                                page={currentPage}
-                                onChange={handlePageChange}
-                                color="secondary"
-                                renderItem={(item) => (
-                                    <PaginationItem
-                                      slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                      {...item}
+                    {(!loading && users.length) > 0 && (
+                        <div>
+                            {currentUsers.map((user, i) => (
+                                <User key={i} user={user} setSelectedUser={setSelectedUser}></User>
+                            ))}
+                            <Stack spacing={2} sx={{ marginTop: '20px' }}>
+                                {/*
+                                Conditionally render Pagination only when not loading
+                                */}
+                                {!loading && (
+                                    <Pagination
+                                        count={Math.ceil(users.length / usersPerPage)}
+                                        page={currentPage}
+                                        onChange={handlePageChange}
+                                        color="secondary"
+                                        renderItem={(item) => (
+                                            <PaginationItem
+                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                                {...item}
+                                            />
+                                        )}
                                     />
-                                  )}
-                            />
-                        </Stack>
-                    </div>
+                                )}
+                            </Stack>
+                        </div>
+                    )}
                 </Box>
 
                 {/* User Details */}

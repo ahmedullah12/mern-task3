@@ -17,7 +17,7 @@ const UsersDetails = ({ selectedUser, setSelectedUser }) => {
       backgroundColor: "#f8f8f8",
       borderRadius: "10px",
     }} elevation={3}>
-
+      
       {/* close details */}
       <p onClick={handleClose} style={{ position: "absolute", top: "2%", right: "2%", cursor: "pointer", color: "#555" }}>
         <CloseIcon />
